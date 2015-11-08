@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Auteur: Baptiste Barbieri
+#
+#
+
+if (( $# = 0 ))
+then
+	echo Spécifier au moins un paramètre parmis :
+	echo start, send, url, cmd
+else
+	if [ $1 = start ]
+	then 
+		python3 chat/listener.py &
+	elif [ $1 = send ]
+	then
+		if (( $# < 2))
+		then
+			echo Pas assez d\'arguments
+		else
+			chat/send.py $2
+		fi
+	elif [ $1 = url ]
+	then
+		echo Etes vous sur de vouloir ouvrir le lien : $(cat chat/url.tmp) ? [Y/n]
+		read ans
+		if [ $ans = n || $ans = no || $ans = N || $ans = No ]
+		then
+			true
+		else
+			firefox $(cat chat/url.tmp) &
+		fi
+	elif [ $1 = cmd ]
+	then
+		echo Etes vous sur de vouloir executer la commande : $(cat chat/cmd.tmp) ? [Y/n]
+		read ans
+		if [ $ans = n || $ans = no || $ans = N || $ans = No ]
+		then
+			true
+		else
+			bash $(cat chat/cmd.tmp) &
+		fi
+	else
+		echo Action inconnue
+	fi
+fi
