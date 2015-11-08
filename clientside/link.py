@@ -7,7 +7,6 @@ from resolver import *
 serv = "http://127.0.0.1/ConsoleChat/serverside/"
 
 def send(msg):
-    #tr = { ' ' : '%20', '+' : '%2B', '!' : '%21'}
     sender = 'me'
     return urllib.request.urlopen(serv + "send.php?sender="+sender+"&message="+urllib.parse.quote(msg)).read().decode('utf-8')
 
