@@ -13,14 +13,18 @@ include_once('connectDB.php');
 
 date_default_timezone_set("Europe/Paris");
 
-$x = isset($_GET['qte']) ? $_GET['qte'] : 1;
+isset($_GET['last']) or die("Unset arg. last");	
+
 $ans = "";
-$msgs = $db->query("SELECT * FROM messages ORDER BY envoie DESC LIMIT " . $x);
+$q = $db->prepare("SELECT * FROM messages WHERE envoie > STR_TO_DATE(:last, '%Y-%m-%d %T') ORDER BY envoie DESC");
+$q->bindValue("last", $_GET['last'], PDO::PARAM_STR);
+$msgs = $q->execute();
 
 if ($msgs) {
-    foreach ($msgs as $msg) {
+    while ($msg = $q->fetch()) {
         $ans = "[" . $msg['envoie'] . "] " . $msg['auteur'] . " : " . $msg['contenu'] . $linesep . $ans;
     }
 }
+else echo "no messages";
 
 echo $ans;

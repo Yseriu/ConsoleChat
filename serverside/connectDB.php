@@ -6,6 +6,6 @@
  * Time: 13:16
  */
 
-$db = new PDO('mysql:host=localhost:3307;dbname=chat', 'root', 'usbw');
+$db = new PDO('mysql:host=localhost:24;dbname=chat', 'root', 'usbw');
 
 ?>
