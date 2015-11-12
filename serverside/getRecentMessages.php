@@ -10,6 +10,7 @@
 $linesep = "\n";
 
 include_once('connectDB.php');
+include_once('getMessage.php');
 
 date_default_timezone_set("Europe/Paris");
 
@@ -22,7 +23,7 @@ $msgs = $q->execute();
 
 if ($msgs) {
     while ($msg = $q->fetch()) {
-        $ans = "[" . $msg['envoie'] . "] " . $msg['auteur'] . " : " . $msg['contenu'] . $linesep . $ans;
+        $ans = getMessage() . $ans;
     }
 }
 else echo "no messages";
